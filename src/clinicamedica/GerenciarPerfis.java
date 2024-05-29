@@ -2,6 +2,6 @@
 package clinicamedica;
 
 
-public class Login {
+public class GerenciarPerfis {
     
 }
