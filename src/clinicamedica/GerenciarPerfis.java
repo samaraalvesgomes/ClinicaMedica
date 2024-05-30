@@ -3,5 +3,13 @@ package clinicamedica;
 
 
 public class GerenciarPerfis {
-    String nome;
+    String usuario, senha;
+
+
+    void signin (){
+
+        System.out.println(" Login-in aceito!");
+    }
+
+
 }
