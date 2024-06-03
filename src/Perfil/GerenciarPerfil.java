@@ -10,7 +10,7 @@ import query.Usuario;
 public class GerenciarPerfil {
     Scanner scanner = new Scanner(System.in);
 
-    public void cadastrousuario(){
+    public void cadastroUsuario(){
 
         //instanciando as classes
         Usuario cadastro = new Usuario(); 
@@ -27,5 +27,24 @@ public class GerenciarPerfil {
         
         cadastro.create(getset);
 
+        // clearConsole();
+
+        System.out.println("Cadastro realizado");
+    }
+
+    public String loginUsuario(){
+
+        // Aqui você pode implementar a lógica de autenticação do usuário
+        System.out.println("Digite seu nome de usuário: ");
+        String nome = scanner.nextLine(); // este novo atributo é necessário?                        <--
+        System.out.println("Digite sua senha: ");
+        String senha = scanner.nextLine();
+
+        // Verificação de credenciais (exemplo simplificado)
+        if (nome.equals("samara") && senha.equals("1234")) {                     ///<--
+            return "verdadeiro"; // Retorna o nome do usuário em caso de sucesso
+        } else {
+            return "erro"; // Retorna null em caso de falha no login
+        }
     }
 }
