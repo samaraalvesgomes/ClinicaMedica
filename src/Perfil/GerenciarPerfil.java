@@ -3,11 +3,14 @@ package Perfil;
 /*import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException; */
+
 import java.util.Scanner;
+
+import clinicamedica.LimparConsole;
 //import connection.ConnectionFactory;
 import query.Usuario;
 
-public class GerenciarPerfil {
+public class GerenciarPerfil extends GetSet { // Tentativa de criar uma herança 
     Scanner scanner = new Scanner(System.in);
 
     public void cadastroUsuario(){
@@ -27,7 +30,7 @@ public class GerenciarPerfil {
         
         cadastro.create(getset);
 
-        // clearConsole();
+        LimparConsole.clearConsole(); // Limpar console
 
         System.out.println("Cadastro realizado");
     }

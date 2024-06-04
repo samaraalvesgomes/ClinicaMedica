@@ -1,13 +1,22 @@
 package clinicamedica;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import Perfil.GerenciarPerfil;
+import Perfil.GetSet;
+import connection.ConnectionFactory;
 
 public class ClinicaMedica {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         GerenciarPerfil perfil = new GerenciarPerfil();
         String logado = null ;
+        String opcao;
 
         System.out.println("Bem-vindo(a) a Mais Saúde!!!");
 
@@ -19,7 +28,7 @@ public class ClinicaMedica {
                 System.out.println("A - Criar usuário");
                 System.out.println("B - Login");
                 System.out.println("C - Sair");
-                String opcao = scanner.nextLine();
+                opcao = scanner.nextLine();
 
                 switch (opcao.toUpperCase()) {
                     case "A":
@@ -45,35 +54,66 @@ public class ClinicaMedica {
                 }
             } else { // refazer para 2 telas
 
+                
+                // Condição de teste
 
+                // funcionário
 
+                // Menu do site para funcionário após o login
+                System.out.println("A - Ver agenda");
+                System.out.println("B - Agendar um retorno");
+                System.out.println("C - Sair");
+                opcao = scanner.nextLine();
 
-                // Menu do site após o login
-                System.out.println("Bem-vindo(a) ao Site da Clínica Médica");
-                System.out.println("D - Agendar consulta");
-                System.out.println("E - Ver histórico de consultas");
-                System.out.println("F - Sair");
+                while(opcao != "A" || opcao != "B" || opcao != "C"){
+                    switch (opcao.toUpperCase()) {
+                        case "A":
+                            // Lógica para agendar consulta
+                            System.out.println("Funcionalidade de agendar consulta em desenvolvimento...");
+                            Connection con = ConnectionFactory.getConnection();
+                            System.out.println("conexão criada com sucesso");
 
-                String opcao = scanner.nextLine();
+                            PreparedStatement stmt = null;
+                            ResultSet rs = null;
+                            List <GetSet> usuarios = new ArrayList<>();
 
-                switch (opcao.toUpperCase()) {
-                    case "D":
-                        // Lógica para agendar consulta
-                        System.out.println("Funcionalidade de agendar consulta em desenvolvimento...");
-                        break;
-                    case "E":
-                        // Lógica para ver histórico de consultas
-                        System.out.println("Funcionalidade de ver histórico de consultas em desenvolvimento...");
-                        break;
-                    case "F":
-                        System.out.println("Saindo...");
-                        scanner.close();
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("Opção inválida. Tente novamente.");
+                            try {
+                                stmt = con.prepareStatement(" SELECT * FROM cadastro_usuario");
+                                rs = stmt.executeQuery();
+                                while (rs.next()){
+                                    GetSet usuario = new GetSet();
+                                    usuario.setUsuario(rs.getString("usuario"));
+                                    usuarios.add(usuario);
+                                }
+
+                            } catch (ClassNotFoundException | SQLException ex) {
+                                throw new RuntimeException("Erro na conexão: ", ex);
+                            }finally {
+                                //con.close();
+                            } return GetSet;
+                            break;
+
+                        case "B":
+                            // Lógica para ver histórico de consultas
+                            System.out.println("Funcionalidade de ver histórico de consultas em desenvolvimento...");
+                            break;
+
+                        case "C":
+                            System.out.println("Programa finalizado.");
+                            scanner.close();
+                            System.exit(0);
+                            break;
+
+                        default:
+                            System.out.println("Opção inválida. Tente novamente!");
+                            break;
+                        } 
+                            System.out.println("A - Ver agenda");
+                            System.out.println("B - Agendar um retorno");
+                            System.out.println("C - Sair");
+                            opcao = scanner.nextLine();          
+                    }
                 }
             }
         }
     }
-}
