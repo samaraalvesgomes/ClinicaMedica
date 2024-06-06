@@ -73,7 +73,7 @@ public class ClinicaMedica {
                             Connection con = ConnectionFactory.getConnection();
                             System.out.println("conexão criada com sucesso");
 
-                            PreparedStatement stmt = null;
+                          /*   PreparedStatement stmt = null;
                             ResultSet rs = null;
                             List <GetSet> usuarios = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class ClinicaMedica {
                                 throw new RuntimeException("Erro na conexão: ", ex);
                             }finally {
                                 //con.close();
-                            } return GetSet;
+                            } return GetSet;                     */
                             break;
 
                         case "B":
