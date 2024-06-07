@@ -11,10 +11,10 @@ import java.sql.SQLException;
 //import java.util.logging.Logger;
 //import javax.swing.JOptionPane;
 
-import Perfil.GetSet;
+import Perfil.Pessoa;
 
-public class Usuario {
-    public void create(GetSet p) {
+public class Register {
+    public void create(Pessoa p) {
 
         Connection con = ConnectionFactory.getConnection();
         System.out.println("conexão criada com sucesso");
@@ -22,10 +22,9 @@ public class Usuario {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO cadastro_usuario (usuario,senha,categoria) VALUES (?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO cadastro_usuario (usuario,senha) VALUES (?,?)");
             stmt.setString(1, p.getUsuario());
             stmt.setString(2, p.getSenha());
-            stmt.setString(3, p.getCategoria());
             System.out.println("inserindo registro");
 
             stmt.executeUpdate();

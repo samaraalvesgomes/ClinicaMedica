@@ -1,4 +1,4 @@
-package clinicamedica;
+package clinicamedica.organizacao;
 
 import java.io.IOException;
 

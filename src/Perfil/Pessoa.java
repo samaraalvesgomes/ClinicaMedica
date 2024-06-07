@@ -1,6 +1,6 @@
 package Perfil;
 
-public class GetSet {
+public class Pessoa {
     String usuario, senha, categoria;
 
 

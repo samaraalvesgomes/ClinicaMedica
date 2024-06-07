@@ -3,32 +3,30 @@ package Perfil;
 /*import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException; */
-
+//import connection.ConnectionFactory;
 import java.util.Scanner;
 
-import clinicamedica.LimparConsole;
-//import connection.ConnectionFactory;
-import query.Usuario;
+import clinicamedica.organizacao.LimparConsole;
+import query.Register;
 
-public class GerenciarPerfil extends GetSet { // Tentativa de criar uma herança 
+
+public class Cliente extends Pessoa { // Tentativa de criar uma herança 
     Scanner scanner = new Scanner(System.in);
+    Register cadastro = new Register(); 
+    Pessoa pessoa = new Pessoa();
+    
 
     public void cadastroUsuario(){
 
-        //instanciando as classes
-        Usuario cadastro = new Usuario(); 
-        GetSet getset = new GetSet();
     
         System.out.println("Sign up"); // Coletar as informações de um usuário cadastrado
     
         System.out.println("Informe seu usuário:");
-        getset.usuario = scanner.nextLine();
+        pessoa.usuario = scanner.nextLine();
         System.out.println("Informe sua senha:");
-        getset.senha = scanner.nextLine();
-        System.out.println("Cliente ou Funcionario:");
-        getset.categoria = scanner.nextLine();
+        pessoa.senha = scanner.nextLine();
         
-        cadastro.create(getset);
+        cadastro.create(pessoa);
 
         LimparConsole.clearConsole(); // Limpar console
 
@@ -39,12 +37,12 @@ public class GerenciarPerfil extends GetSet { // Tentativa de criar uma herança
 
         // Aqui você pode implementar a lógica de autenticação do usuário
         System.out.println("Digite seu nome de usuário: ");
-        String nome = scanner.nextLine(); // este novo atributo é necessário?                        <--
+        String usuario = scanner.nextLine(); // este novo atributo é necessário?                        <--
         System.out.println("Digite sua senha: ");
         String senha = scanner.nextLine();
 
         // Verificação de credenciais (exemplo simplificado)
-        if (nome.equals("samara") && senha.equals("1234")) {                     ///<--
+        if (usuario.equals("samara") && senha.equals("1234")) {                     ///<--
             return "verdadeiro"; // Retorna o nome do usuário em caso de sucesso
         } else {
             return "erro"; // Retorna null em caso de falha no login
