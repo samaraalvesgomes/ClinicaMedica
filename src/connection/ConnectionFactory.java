@@ -2,11 +2,11 @@ package connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
     public class ConnectionFactory {
 
@@ -18,7 +18,7 @@ import java.sql.SQLException;
         public static Connection getConnection() {
             try {
                 Class.forName(DRIVER);
-                System.out.println("conexão criada com sucesso");
+                //System.out.println("conexão criada com sucesso");
                 return DriverManager.getConnection(URL, USER, PASS);
 
             } catch (ClassNotFoundException | SQLException ex) {

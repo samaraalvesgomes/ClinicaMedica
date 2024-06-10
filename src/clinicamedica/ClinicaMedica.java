@@ -1,19 +1,25 @@
 package clinicamedica;
 
 import java.sql.Connection;
+import connection.ConnectionFactory;
+import perfil.*;
+
 import java.util.Scanner;
 import clinicamedica.organizacao.*;
-import Perfil.*;
-import connection.ConnectionFactory;
+import servicos.*;
+import query.*;
 
 public class ClinicaMedica {
+    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Cliente perfil = new Cliente();
+        Cliente cliente = new Cliente();
         Menus menus = new Menus();
+        Register register = new Register();
 
         String logado = null;
-        int opcao;
+        int opcao, especialidade;
+        
 
         System.out.println("Bem-vindo(a) a Mais Saúde!!!");
 
@@ -26,18 +32,18 @@ public class ClinicaMedica {
                 
                 switch (opcao) {
                     case 1:
-                        perfil.cadastroUsuario();
+                        cliente.cadastroUsuario();
                         break; // Voltar para o menu de login após criar usuário
 
                     case 2:
-                        logado = perfil.loginUsuario();
-                        if ("verdadeiro".equals(logado)) { // Comparação correta de strings
-                            System.out.println("Bem-vindo(a) " + logado); // Adicione um espaço após "Bem-vindo(a)"
-                        } else {
-                            logado = null; // Reset logado se login falhar
-                            System.out.println("Falha no login. Tente novamente.");
-                        }
-                        break;
+                        logado = cliente.loginUsuario();
+
+                        while ("erro".equals(logado)) {
+                            System.out.println("Usuario invalido. Tente novamente.");
+                            logado = cliente.loginUsuario();
+                        }  
+                            System.out.println("Bem-vindo(a): " + cliente.getUsuario().toUpperCase()); //retornar o nome da pessoa logada
+                            break; 
 
                     case 3:
                         System.out.println("Programa finalizado.");
@@ -50,6 +56,9 @@ public class ClinicaMedica {
                 }
             } else { 
                 // Login feito, entrada para gerenciamento do cliente
+                Consulta consulta=new Consulta();
+                Agenda agenda=new Agenda();
+
                 menus.menuPrincipal(); // Menu do site após o login
                 System.out.print("Escolha uma opção: ");
                 opcao = scanner.nextInt(); // Captura a entrada do usuário para a variável 'opcao'
@@ -58,14 +67,38 @@ public class ClinicaMedica {
                     case 1:
                         // Lógica para agendar consulta
                         System.out.println("Marcar consulta");
-                        Connection con = ConnectionFactory.getConnection();
+                        Connection con = ConnectionFactory.getConnection(); //??
+                        
+                        consulta.menuEspecialidades();
+                        System.out.print("Escolha uma opção: ");
+                        especialidade = scanner.nextInt();
+
+                        if(especialidade >= 1 && especialidade <= 6){
+
+                            agenda.datasDisponiveis();
+                            agenda.horariosDisponiveis();
+
+                        }else if(especialidade == 7){
+
+                            System.out.println("Programa finalizado.");
+                            scanner.close();
+                            System.exit(0);
+
+                        }else{
+                            System.out.println("Opção inválida. Tente novamente.");
+                        }  
                         // Adicione lógica para marcar consulta aqui
+
                         break;
 
                     case 2:
                         // Lógica para ver histórico de consultas
-                        System.out.println("Ver consultas agendadas");
-                        // Adicione lógica para ver histórico de consultas aqui
+                        register.listar();
+                        // Chamar uma lista de todas as consultas marcadas deste paciente
+
+                        menus.menuConsultasAgendadas();
+                        System.out.print("Escolha uma opção: ");
+                        opcao = scanner.nextInt(); // Captura a entrada do usuário para a variável 'opcao'
                         break;
 
                     case 3:
