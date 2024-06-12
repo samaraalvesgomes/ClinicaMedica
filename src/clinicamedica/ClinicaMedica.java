@@ -64,37 +64,32 @@ public class ClinicaMedica {
                 opcao = scanner.nextInt(); // Captura a entrada do usuário para a variável 'opcao'
                 
                 switch (opcao) {
-                    case 1:
-                        // Lógica para agendar consulta
-                        System.out.println("Marcar consulta");
-                        Connection con = ConnectionFactory.getConnection(); //??
-                        
-                        consulta.menuEspecialidades();
-                        System.out.print("Escolha uma opção: ");
-                        especialidade = scanner.nextInt();
+                    case 1:// Lógica para agendar consulta
 
-                        if(especialidade >= 1 && especialidade <= 6){
+                        consulta.marcarConsulta();
+                        consulta.menuPosMarcarConsulta();
+                        System.out.print("Escolha uma opcao ");
+                        opcao = scanner.nextInt();
 
-                            agenda.datasDisponiveis();
-                            agenda.horariosDisponiveis();
-
-                        }else if(especialidade == 7){
-
+                        switch(opcao){
+                            case 1:
+                                //marcar outra consulta
+                            case 2:
+                                //voltar para o menu principal
+                                break;
+                            case 3:
                             System.out.println("Programa finalizado.");
                             scanner.close();
                             System.exit(0);
-
-                        }else{
+                            default:
                             System.out.println("Opção inválida. Tente novamente.");
                         }  
-                        // Adicione lógica para marcar consulta aqui
 
                         break;
 
                     case 2:
-                        // Lógica para ver histórico de consultas
-                        register.listar();
-                        // Chamar uma lista de todas as consultas marcadas deste paciente
+
+                        register.listar(); // Chamar uma lista de todas as consultas marcadas deste paciente
 
                         menus.menuConsultasAgendadas();
                         System.out.print("Escolha uma opção: ");
@@ -102,12 +97,14 @@ public class ClinicaMedica {
                         break;
 
                     case 3:
+
                         System.out.println("Programa finalizado.");
                         scanner.close();
                         System.exit(0);
                         break;
 
                     default:
+
                         System.out.println("Opção inválida. Tente novamente!");
                 }
             }

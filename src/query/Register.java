@@ -44,7 +44,7 @@ public class Register {
 
             stmt = con.prepareStatement("SELECT * FROM agendamento_consultas where usuario = ?");
             stmt.setString(1,pessoa.getUsuario());
-            System.out.println(pessoa.getUsuario());
+            System.out.println(pessoa.getUsuario());                                       //Variável com defeito
             rs = stmt.executeQuery();
 
             while (rs.next()) {
