@@ -42,14 +42,14 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
         //Register register = new Register(); 
         Pessoa pessoa = new Pessoa();
         
-        // Aqui você pode implementar a lógica de autenticação do usuário
+        // lógica de autenticação do usuário
         System.out.println("Digite seu nome de usuário: ");
-        usuario= scanner.nextLine(); // este novo atributo é necessário? 
+        usuario = scanner.nextLine(); 
         pessoa.setClienteAux(usuario);  
         System.out.println(pessoa.getClienteAux()); 
         System.out.println("Digite sua senha: ");
         senha = scanner.nextLine();
-        // Verificação de credenciais (exemplo simplificado)
+        // Verificação de credenciais 
         Connection con = ConnectionFactory.getConnection();
 
         PreparedStatement stmt = null;

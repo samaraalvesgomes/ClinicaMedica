@@ -48,7 +48,7 @@ public class ClinicaMedica {
                             logado = cliente.loginUsuario();
                         }  
                         System.out.println("Bem-vindo(a): " + cliente.getUsuario().toUpperCase()); //Login aceito 
-                        break; // Pula para linha 58
+                        break; // Pula para linha 64
 
                     case 3: // Finalizar programa
 
