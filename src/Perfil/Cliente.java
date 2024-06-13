@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException; 
 import connection.ConnectionFactory;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -12,15 +11,15 @@ import java.util.logging.Logger;
 
 import clinicamedica.ClinicaMedica;
 import clinicamedica.organizacao.LimparConsole;
-import connection.ConnectionFactory;
 import query.Register;
 
+//import java.sql.SQLException; 
+//import connection.ConnectionFactory;
 
 public class Cliente extends Pessoa { // Tentativa de criar uma herança 
     Scanner scanner = new Scanner(System.in);
     Register cadastro = new Register(); 
     Pessoa pessoa = new Pessoa();
-    String clienteAux;
 
     
 
@@ -35,19 +34,19 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
         pessoa.senha = scanner.nextLine();
         
         cadastro.create(pessoa);
-
         LimparConsole.clearConsole(); // Limpar console
-
         System.out.println("Cadastro realizado");
     }
 
     public String loginUsuario(){
-        Register register = new Register(); 
+        //Register register = new Register(); 
         Pessoa pessoa = new Pessoa();
         
         // Aqui você pode implementar a lógica de autenticação do usuário
         System.out.println("Digite seu nome de usuário: ");
-        usuario= scanner.nextLine(); // este novo atributo é necessário?                        <--
+        usuario= scanner.nextLine(); // este novo atributo é necessário? 
+        pessoa.setClienteAux(usuario);  
+        System.out.println(pessoa.getClienteAux()); 
         System.out.println("Digite sua senha: ");
         senha = scanner.nextLine();
         // Verificação de credenciais (exemplo simplificado)

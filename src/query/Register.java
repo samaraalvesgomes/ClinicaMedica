@@ -1,20 +1,23 @@
 package query;
 
+//import java.sql.ResultSet;
 import connection.ConnectionFactory;
-import perfil.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-//import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import clinicamedica.*;
-import perfil.*;
+import perfil.Pessoa;
+//import perfil.Cliente;
 
 public class Register {
+    Pessoa pessoa = new Pessoa();
+
+    //Cliente cliente = new Cliente();
+
     public void create(Pessoa p) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -34,19 +37,17 @@ public class Register {
         } finally {
             //con.close();
         }
-
     }  
-    public void listar() {
+
+    public void listar(Pessoa pessoa) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-         Pessoa pessoa = new Pessoa();
-         Cliente cliente = new Cliente();
         try {
 
             stmt = con.prepareStatement("SELECT * FROM agendamento_consultas where usuario = ?");
-            stmt.setString(1,cliente.getUsuario());
-            System.out.println(cliente.getUsuario());                                       //Variável com defeito
+            stmt.setString(1, pessoa.getClienteAux());
+            System.out.println(pessoa.getClienteAux());                                       
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -56,8 +57,11 @@ public class Register {
                 pessoa.setEspecialidade(rs.getString("especialidade"));
                 pessoa.setDataHora(rs.getDate("data_agendada"));
                 System.out.println(pessoa.toString());
-            }
 
+            }
+            if (pessoa.getEspecialidade() == null){
+                System.out.println("Você não possui nenhuma consulta agendada.");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -65,4 +69,19 @@ public class Register {
 
     }  
 
+    public void deletar(Pessoa protocolo){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM agendamento_consultas WHERE protocolo= ?");
+            stmt.setInt(1, protocolo.getProtocolo());
+            stmt.executeUpdate();
+            System.out.println("Consulta cancelada");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+        }
+    }
 }

@@ -35,7 +35,6 @@ public class Pessoa {
 
 
     public String getUsuario() {
-        clienteAux = usuario;
         return usuario;
     }
 
@@ -49,6 +48,14 @@ public class Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getClienteAux() {
+        return clienteAux;
+    }
+
+    public void setClienteAux(String clienteAux) {
+        this.clienteAux = clienteAux;
     }
 
     @Override
