@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import clinicamedica.*;
+import perfil.*;
 
 public class Register {
     public void create(Pessoa p) {
@@ -40,11 +41,12 @@ public class Register {
         PreparedStatement stmt = null;
         ResultSet rs = null;
          Pessoa pessoa = new Pessoa();
+         Cliente cliente = new Cliente();
         try {
 
             stmt = con.prepareStatement("SELECT * FROM agendamento_consultas where usuario = ?");
-            stmt.setString(1,pessoa.getUsuario());
-            System.out.println(pessoa.getUsuario());                                       //Variável com defeito
+            stmt.setString(1,cliente.getUsuario());
+            System.out.println(cliente.getUsuario());                                       //Variável com defeito
             rs = stmt.executeQuery();
 
             while (rs.next()) {

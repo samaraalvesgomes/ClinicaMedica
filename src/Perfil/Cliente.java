@@ -20,7 +20,8 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
     Scanner scanner = new Scanner(System.in);
     Register cadastro = new Register(); 
     Pessoa pessoa = new Pessoa();
-    
+    String clienteAux;
+
     
 
     public void cadastroUsuario(){
@@ -43,8 +44,7 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
     public String loginUsuario(){
         Register register = new Register(); 
         Pessoa pessoa = new Pessoa();
-        String clienteAux;
-
+        
         // Aqui você pode implementar a lógica de autenticação do usuário
         System.out.println("Digite seu nome de usuário: ");
         usuario= scanner.nextLine(); // este novo atributo é necessário?                        <--
@@ -66,7 +66,7 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
 
                 pessoa.setUsuario(rs.getString("usuario"));
                 pessoa.setSenha(rs.getString("senha"));
-
+                clienteAux = rs.getString("usuario");
             }
 
         } catch (SQLException ex) {

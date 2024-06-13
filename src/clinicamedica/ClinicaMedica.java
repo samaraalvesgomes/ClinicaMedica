@@ -18,7 +18,7 @@ public class ClinicaMedica {
         Register register = new Register();
 
         String logado = null;
-        int opcao, especialidade;
+        int opcao;
         
 
         System.out.println("Bem-vindo(a) a Mais Saúde!!!");
