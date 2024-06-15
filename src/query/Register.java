@@ -6,8 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Timestamp;
 
 import clinicamedica.*;
 import perfil.Pessoa;
@@ -52,10 +54,13 @@ public class Register {
 
             while (rs.next()) {
 
-                pessoa.setProtocolo(rs.getInt("protocolo"));
+                pessoa.setProtocolo(rs.getString("protocolo"));
                 pessoa.setUsuario(rs.getString("usuario"));
                 pessoa.setEspecialidade(rs.getString("especialidade"));
-                pessoa.setDataHora(rs.getDate("data_agendada"));
+                java.sql.Timestamp timestamp = rs.getTimestamp("data_agendada");
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                pessoa.setDataHora(localDateTime);
                 System.out.println(pessoa.toString());
 
             }
@@ -75,13 +80,42 @@ public class Register {
 
         try {
             stmt = con.prepareStatement("DELETE FROM agendamento_consultas WHERE protocolo= ?");
-            stmt.setInt(1, protocolo.getProtocolo());
+            stmt.setString(1, protocolo.getProtocolo());
             stmt.executeUpdate();
             System.out.println("Consulta cancelada");
 
         } catch (SQLException ex) {
             Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+        }
+    }
+
+    public void criarConsulta(Pessoa consulta){
+
+        Connection con = ConnectionFactory.getConnection();
+        System.out.println("conexão criada com sucesso");
+
+        PreparedStatement stmt = null;
+
+        try {
+
+            stmt = con.prepareStatement("INSERT INTO agendamento_consultas (protocolo, usuario, especialidade, data_agendada) VALUES (?,?,?,?)");
+            stmt.setString(1, consulta.getProtocolo());
+            stmt.setString(2, consulta.getUsuario());
+            stmt.setString(3, consulta.getEspecialidade());
+            Timestamp timestamp = Timestamp.valueOf(consulta.getDataHora());
+            stmt.setTimestamp(4, timestamp);
+            System.out.println("consulta agendada!");
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex);
+
+        } finally {
+
+            //con.close();
         }
     }
 }

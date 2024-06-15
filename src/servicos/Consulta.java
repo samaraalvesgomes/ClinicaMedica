@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random; 
 
 // import javax.swing.plaf.synth.SynthDesktopIconUI;
 
@@ -19,8 +24,10 @@ public class Consulta {
     Pessoa pessoa = new Pessoa();
     Cliente cliente = new Cliente();
     Register register =new Register();
-    int especialidade, cancelar;
+    int especialidade; 
+    String cancelar;
     String confirm;
+
 
     public void menuEspecialidades(){
         System.out.println("Marcar consulta");
@@ -42,11 +49,25 @@ public class Consulta {
         especialidade = scanner.nextInt();
 
         if(especialidade >= 1 && especialidade <= 6){
-            //buscar no banco todos os horários disponíveis da especialidade escolhida
-            //Escolher data e hora
-	        //gerar protocólo para registrar no banco
-	        //buscar usuário e especialidade
-	        //registrar na tabela agendamento_consultas
+            String auxDataHora;
+            System.out.println("Digite a data e hora que deseja marcar a consulta: dd/MM/yyyy HH:mm");
+            auxDataHora = scanner.nextLine();
+            System.out.println(auxDataHora);
+
+           // LocalDateTime auxDaLocalDateTime = parseDateTime(auxDataHora);
+           // pessoa.setDataHora(auxDaLocalDateTime);
+            //Random gerar = new Random();
+           // int gerador = gerar.nextInt(99);
+            
+          /*   DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            LocalTime localTime = LocalTime.now();
+            int finalprot = localTime.getMinute() + localTime.getSecond();*/
+           // String auxProtocolo = auxDaLocalDateTime.toLocalDate().format(outputFormatter) + String.valueOf(finalprot) ; 
+//System.out.println("O n° do protocolo da consulta é: " + auxProtocolo);
+           // pessoa.setProtocolo(auxProtocolo);
+
+            register.criarConsulta(pessoa);
+
         }else if(especialidade == 7){
             System.out.println("Programa finalizado.");
             scanner.close();
@@ -55,6 +76,11 @@ public class Consulta {
             System.out.println("Opção inválida. Tente novamente.");
         }   
     }
+    public static LocalDateTime parseDateTime(String dateTime) {
+    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+    return LocalDateTime.parse(dateTime, inputFormatter);
+}
 
     public void menuPosMarcarConsulta(){
 
@@ -78,7 +104,7 @@ public class Consulta {
 
     private void auxCancelarConsulta(){
         System.out.println("Digite o protocolo da consulta você deseja cancelar:");
-        cancelar = scanner.nextInt();
+        cancelar = scanner.nextLine();
         pessoa.setProtocolo(cancelar);
         
         
@@ -89,11 +115,11 @@ public class Consulta {
         try {
 
             stmt = con.prepareStatement("SELECT protocolo FROM agendamento_consultas WHERE protocolo = ? ");
-            stmt.setInt(1, cancelar);
+            stmt.setString(1, cancelar);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                pessoa.setProtocolo(rs.getInt("protocolo"));
+                pessoa.setProtocolo(rs.getString("protocolo"));
             }
             register.deletar(pessoa);
 
@@ -102,4 +128,6 @@ public class Consulta {
         } finally {
         }
     }
+
+    
 }

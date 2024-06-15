@@ -1,10 +1,11 @@
 package perfil;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 public class Pessoa {
     String usuario, senha, especialidade,clienteAux;
-    int protocolo;
-    Date dataHora;
+    String protocolo;
+    LocalDateTime dataHora;
 
 
     public String getEspecialidade() {
@@ -16,20 +17,20 @@ public class Pessoa {
     }
 
 
-    public int getProtocolo() {
+    public String getProtocolo() {
         return protocolo;
     }
 
-    public void setProtocolo(int protocolo) {
+    public void setProtocolo(String protocolo) {
         this.protocolo = protocolo;
     }
 
 
-    public Date getDataHora() {
+    public LocalDateTime getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Date dataHora) {
+    public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
 
