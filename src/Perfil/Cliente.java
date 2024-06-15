@@ -8,7 +8,6 @@ import connection.ConnectionFactory;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import clinicamedica.ClinicaMedica;
 import clinicamedica.organizacao.LimparConsole;
 import query.Register;
@@ -34,8 +33,8 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
         pessoa.senha = scanner.nextLine();
         
         cadastro.create(pessoa);
-        LimparConsole.clearConsole(); // Limpar console
-        System.out.println("Cadastro realizado");
+        //LimparConsole.clearConsole(); // Limpar console
+   
     }
 
     public String loginUsuario(){
@@ -66,6 +65,7 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
                 pessoa.setUsuario(rs.getString("usuario"));
                 pessoa.setSenha(rs.getString("senha"));
                 clienteAux = rs.getString("usuario");
+                
             }
 
         } catch (SQLException ex) {

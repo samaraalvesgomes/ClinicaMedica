@@ -61,7 +61,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Resultado da Agenda [Protocolo=" + protocolo + ", Usuario" + usuario +", Especialidade" + especialidade + ", data Agendada" + dataHora +"]";
+        return "Resultado da Agenda [Protocolo=" + protocolo + ", Usuario: " + usuario +", Especialidade: " + especialidade + ", data Agendada: " + dataHora +"]";
     }
 
 }

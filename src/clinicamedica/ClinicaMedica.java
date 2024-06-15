@@ -68,11 +68,8 @@ public class ClinicaMedica {
                 
                 switch (opcao) {
                     case 1:// Agendar consulta
+                        consulta.marcarConsulta(cliente.getUsuario()); 
 
-                        consulta.marcarConsulta(); 
-                        consulta.menuPosMarcarConsulta(); //marcar outra ou voltar menu principal?
-                        System.out.print("Escolha uma opcao ");
-                        opcao = scanner.nextInt(); // Escolha da opçao do menu
 
                         switch(opcao){
                             case 1:

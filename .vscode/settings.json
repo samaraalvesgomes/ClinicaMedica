@@ -1,6 +1,12 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\saalv\\Documents\\mysql-connector-java-5.1.48.jar"
+        "c:\\Users\\saalv\\Documents\\mysql-connector-java-5.1.48.jar",
+        "c:\\Users\\milen\\Downloads\\mysql-connector-java-5.1.48.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.sourcePaths": [
+        "src",
+        ""
     ]
 }

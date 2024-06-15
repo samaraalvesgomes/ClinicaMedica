@@ -2,6 +2,9 @@ package query;
 
 //import java.sql.ResultSet;
 import connection.ConnectionFactory;
+import perfil.Cliente;
+import perfil.Pessoa;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +15,6 @@ import java.util.logging.Logger;
 import java.sql.Timestamp;
 
 import clinicamedica.*;
-import perfil.Pessoa;
-//import perfil.Cliente;
 
 public class Register {
     Pessoa pessoa = new Pessoa();
@@ -23,19 +24,20 @@ public class Register {
     public void create(Pessoa p) {
 
         Connection con = ConnectionFactory.getConnection();
-        System.out.println("conexão criada com sucesso");
 
         PreparedStatement stmt = null;
 
         try {
+
             stmt = con.prepareStatement("INSERT INTO cadastro_usuario (usuario,senha) VALUES (?,?)");
             stmt.setString(1, p.getUsuario());
             stmt.setString(2, p.getSenha());
-            System.out.println("inserindo registro");
+            
 
             stmt.executeUpdate();
+            System.out.println("inserindo registro");
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Usuario ja cadastrado");
         } finally {
             //con.close();
         }
@@ -47,7 +49,11 @@ public class Register {
         ResultSet rs = null;
         try {
 
-            stmt = con.prepareStatement("SELECT * FROM agendamento_consultas where usuario = ?");
+            stmt = con.prepareStatement("SELECT protocolo, usuario, especialidades.especialidade, data_agendada FROM agendamento_consultas \r\n" + //
+                                "INNER JOIN especialidades ON\r\n" + //
+                                "especialidades.id_especialidade = agendamento_consultas.especialidade \r\n" + //
+                                "where usuario = ?\r\n" + //
+                                "");
             stmt.setString(1, pessoa.getClienteAux());
             System.out.println(pessoa.getClienteAux());                                       
             rs = stmt.executeQuery();
@@ -91,7 +97,7 @@ public class Register {
     }
 
     public void criarConsulta(Pessoa consulta){
-
+        System.out.println(consulta.getClienteAux() + consulta.getUsuario());
         Connection con = ConnectionFactory.getConnection();
         System.out.println("conexão criada com sucesso");
 
