@@ -1,10 +1,7 @@
 package query;
 
-//import java.sql.ResultSet;
 import connection.ConnectionFactory;
-//import perfil.Cliente;
 import perfil.Pessoa;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Timestamp;
-
 import clinicamedica.*;
 import clinicamedica.organizacao.LimparConsole;
 

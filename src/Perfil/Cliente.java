@@ -12,13 +12,11 @@ import clinicamedica.ClinicaMedica;
 import clinicamedica.organizacao.LimparConsole;
 import query.Register;
 
-//import java.sql.SQLException; 
-//import connection.ConnectionFactory;
-
 public class Cliente extends Pessoa { // Tentativa de criar uma herança 
     Scanner scanner = new Scanner(System.in);
     Register cadastro = new Register(); 
     Pessoa pessoa = new Pessoa();
+
 
     public void cadastroUsuario(){
         LimparConsole.clearConsole();
@@ -35,6 +33,7 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
         cadastro.create(pessoa);
         
     }
+
 
     public String loginUsuario(){
         //Register register = new Register(); 

@@ -1,9 +1,5 @@
 package clinicamedica;
-
-/*import java.sql.Connection;
-import connection.ConnectionFactory;*/
 import java.util.Scanner;
-
 import clinicamedica.organizacao.*;
 import servicos.*;
 import query.*;
@@ -27,13 +23,17 @@ public class ClinicaMedica {
         
 
         System.out.println("Bem-vindo(a) a Mais Saúde!!!");
-
+        /**
+         * 
+         */
         while (true) {
             if (logado == null) {
                 menus.menuEntrar(); // Exibir menu de login
                 System.out.print("Escolha uma opção: ");
                 opcao = scanner.nextInt(); // Escolher opção do menu
-                
+                /**
+                 * 
+                 */
                 switch (opcao) {
                     case 1: // cadastrar usuário
 

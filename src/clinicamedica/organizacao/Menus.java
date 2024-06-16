@@ -1,18 +1,5 @@
 package clinicamedica.organizacao;
 
-/*import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
-import java.sql.PreparedStatement;
-
-import clinicamedica.ClinicaMedica;
-import java.sql.Connection;
-import connection.ConnectionFactory;
-import perfil.*;
-
-import clinicamedica.organizacao.*;
-import servicos.*; */
-
 import java.util.Scanner;
 
 public class Menus {
