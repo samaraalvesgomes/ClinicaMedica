@@ -1,6 +1,7 @@
 package servicos;
 
 import clinicamedica.ClinicaMedica;
+import clinicamedica.organizacao.LimparConsole;
 import connection.ConnectionFactory;
 import perfil.Cliente;
 import perfil.Pessoa;
@@ -28,7 +29,12 @@ public class Consulta {
     String confirm;
 
     public int menuEspecialidades() {
+
+        LimparConsole.clearConsole();
+        System.out.println("------------------------------------");
         System.out.println("Marcar consulta");
+        System.out.println("------------------------------------");
+        System.out.println("Escolha a especialidade que deseja:");
         System.out.println("1 - Clínica médica");
         System.out.println("2 - Cardiologia");
         System.out.println("3 - Ginecologia");
@@ -62,14 +68,15 @@ public class Consulta {
     }
 
     public void marcarConsulta(String usuario) {
+
         pessoa.setUsuario(usuario);
         var especialidade = menuEspecialidades();
+        System.out.println("");  
         var dataHora = menuDataHora();
 
         pessoa.setEspecialidade(String.valueOf(especialidade));
         pessoa.setDataHora(dataHora);
 
-            
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalTime localTime = LocalTime.now();
         int finalprot = localTime.getMinute() + localTime.getSecond();
@@ -85,22 +92,15 @@ public class Consulta {
         return LocalDateTime.parse(dateTime, inputFormatter);
     }
 
-    public void menuPosMarcarConsulta() {
-        System.out.println("1 - Marcar outra consulta");
-        System.out.println("2 - Voltar ao menu principal");
-        System.out.println("3 - Sair");
-    }
 
     public void cancelarConsulta() {
+        System.out.println("");
         auxCancelarConsulta();
 
         while (!cancelar.equals(pessoa.getProtocolo())) {
+            System.out.println("");
             auxCancelarConsulta();
         }
-    }
-
-    public void reagendarConsulta() {
-        // Método reservado para implementação futura
     }
 
     private void auxCancelarConsulta() {
@@ -133,5 +133,9 @@ public class Consulta {
                 Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public void reagendarConsulta() {
+        // Método reservado para implementação futura
     }
 }

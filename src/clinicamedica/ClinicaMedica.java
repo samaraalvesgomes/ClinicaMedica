@@ -11,6 +11,7 @@ import perfil.*;
 public class ClinicaMedica {
     
     public static void main(String[] args) {
+        LimparConsole.clearConsole();
         Scanner scanner = new Scanner(System.in);
         Cliente cliente = new Cliente();
         Menus menus = new Menus();
@@ -47,12 +48,17 @@ public class ClinicaMedica {
                             System.out.println("Usuario invalido. Tente novamente.");
                             logado = cliente.loginUsuario();
                         }  
+                        LimparConsole.clearConsole();
                         System.out.println("Bem-vindo(a): " + cliente.getUsuario().toUpperCase()); //Login aceito 
                         break; // Pula para linha 64
 
                     case 3: // Finalizar programa
 
+                        System.out.println("");
+                        System.out.println("--------------------------------------");
                         System.out.println("Obrigada por escolher a Mais Saúde! ");
+                        System.out.println("--------------------------------------");
+                        System.out.println("");
                         scanner.close();
                         System.exit(0);
 
@@ -69,29 +75,6 @@ public class ClinicaMedica {
                 switch (opcao) {
                     case 1:// Agendar consulta
                         consulta.marcarConsulta(cliente.getUsuario()); 
-
-
-                        switch(opcao){
-                            case 1:
-
-                                //marcar outra consulta
-
-                            case 2:
-
-                                //voltar para o menu principal
-                                break;
-
-                            case 3:
-
-                            System.out.println("Obrigada por escolher a Mais Saúde! ");
-                            scanner.close();
-                            System.exit(0);
-
-                            default:
-
-                            System.out.println("Opção inválida. Tente novamente.");
-
-                        }  
                         break;
 
                     case 2: //Listar consultas agendadas
@@ -113,8 +96,11 @@ public class ClinicaMedica {
                                 break;
 
                             case 3://sair
-
+                                System.out.println("");
+                                System.out.println("--------------------------------------");
                                 System.out.println("Obrigada por escolher a Mais Saúde! ");
+                                System.out.println("--------------------------------------");
+                                System.out.println("");
                                 scanner.close();
                                 System.exit(0);
                          
@@ -127,10 +113,13 @@ public class ClinicaMedica {
 
                     case 3: //Sair do programa
 
-                        System.out.println("Programa finalizado.");
+                        System.out.println("");
+                        System.out.println("--------------------------------------");
+                        System.out.println("Obrigada por escolher a Mais Saúde! ");
+                        System.out.println("--------------------------------------");
+                        System.out.println("");
                         scanner.close();
                         System.exit(0);
-                        break;
 
                     default:
 

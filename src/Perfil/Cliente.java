@@ -20,32 +20,32 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
     Register cadastro = new Register(); 
     Pessoa pessoa = new Pessoa();
 
-    
-
     public void cadastroUsuario(){
-
-    
+        LimparConsole.clearConsole();
+        System.out.println("------------------------------------");
         System.out.println("Sign up"); // Coletar as informações de um usuário cadastrado
+        System.out.println("------------------------------------");
     
         System.out.println("Informe seu usuário:");
         pessoa.usuario = scanner.nextLine();
         System.out.println("Informe sua senha:");
         pessoa.senha = scanner.nextLine();
         
+        LimparConsole.clearConsole(); 
         cadastro.create(pessoa);
-        //LimparConsole.clearConsole(); // Limpar console
-   
+        
     }
 
     public String loginUsuario(){
         //Register register = new Register(); 
         Pessoa pessoa = new Pessoa();
-        
-        // lógica de autenticação do usuário
+        LimparConsole.clearConsole();
+        System.out.println("------------------------------------");
+        System.out.println("Sign up"); // lógica de autenticação do usuário
+        System.out.println("------------------------------------");
         System.out.println("Digite seu nome de usuário: ");
         usuario = scanner.nextLine(); 
-        pessoa.setClienteAux(usuario);  
-        System.out.println(pessoa.getClienteAux()); 
+        pessoa.setClienteAux(usuario);   
         System.out.println("Digite sua senha: ");
         senha = scanner.nextLine();
         // Verificação de credenciais 
@@ -79,6 +79,5 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
             return "erro"; // Retorna null em caso de falha no login
         }
     }
-
     
 }

@@ -1,7 +1,8 @@
 package perfil;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+//import java.util.Date;
+
 public class Pessoa {
     String usuario, senha, especialidade,clienteAux;
     String protocolo;

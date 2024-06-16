@@ -2,7 +2,7 @@ package query;
 
 //import java.sql.ResultSet;
 import connection.ConnectionFactory;
-import perfil.Cliente;
+//import perfil.Cliente;
 import perfil.Pessoa;
 
 import java.sql.Connection;
@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import java.sql.Timestamp;
 
 import clinicamedica.*;
+import clinicamedica.organizacao.LimparConsole;
 
 public class Register {
     Pessoa pessoa = new Pessoa();
@@ -35,15 +36,20 @@ public class Register {
             
 
             stmt.executeUpdate();
-            System.out.println("inserindo registro");
+            System.out.println("Registro criado!");
         } catch (SQLException ex) {
-            System.out.println("Usuario ja cadastrado");
+            System.out.println("Usuario ja cadastrado!");
         } finally {
             //con.close();
         }
     }  
 
     public void listar(Pessoa pessoa) {
+        LimparConsole.clearConsole();
+        System.out.println("");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("CONSULTAS AGENDADAS");
+        System.out.println("");
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -54,8 +60,7 @@ public class Register {
                                 "especialidades.id_especialidade = agendamento_consultas.especialidade \r\n" + //
                                 "where usuario = ?\r\n" + //
                                 "");
-            stmt.setString(1, pessoa.getClienteAux());
-            System.out.println(pessoa.getClienteAux());                                       
+            stmt.setString(1, pessoa.getClienteAux());                                     
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -72,11 +77,13 @@ public class Register {
             }
             if (pessoa.getEspecialidade() == null){
                 System.out.println("Você não possui nenhuma consulta agendada.");
+            }   
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-        }
 
     }  
 
@@ -88,6 +95,7 @@ public class Register {
             stmt = con.prepareStatement("DELETE FROM agendamento_consultas WHERE protocolo= ?");
             stmt.setString(1, protocolo.getProtocolo());
             stmt.executeUpdate();
+            LimparConsole.clearConsole();
             System.out.println("Consulta cancelada");
 
         } catch (SQLException ex) {
@@ -111,6 +119,7 @@ public class Register {
             stmt.setString(3, consulta.getEspecialidade());
             Timestamp timestamp = Timestamp.valueOf(consulta.getDataHora());
             stmt.setTimestamp(4, timestamp);
+            LimparConsole.clearConsole();
             System.out.println("consulta agendada!");
 
             stmt.executeUpdate();
