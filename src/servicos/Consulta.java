@@ -1,6 +1,7 @@
 package servicos;
 
 import clinicamedica.ClinicaMedica;
+import clinicamedica.organizacao.LimparConsole;
 import connection.ConnectionFactory;
 import perfil.Cliente;
 import perfil.Pessoa;
@@ -29,7 +30,11 @@ public class Consulta {
     String confirm;
 
     public int menuEspecialidades() {
+        System.out.println("");
+        System.out.println("------------------------------------");
         System.out.println("Marcar consulta");
+        System.out.println("------------------------------------");
+        System.out.println("Escolha a especialidade que deseja:");
         System.out.println("1 - Clínica médica");
         System.out.println("2 - Cardiologia");
         System.out.println("3 - Ginecologia");
@@ -62,16 +67,19 @@ public class Consulta {
     }
 
     public LocalDateTime menuDataHora() {
+
         String auxDataHora;
         LocalDateTime dateTime = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         while (dateTime == null) {
+            System.out.println("");
             System.out.println("Digite a data e hora que deseja marcar a consulta: dd/MM/yyyy HH:mm");
             auxDataHora = scanner.nextLine();
 
             dateTime = parseDateTime(auxDataHora, formatter);
             if (dateTime == null) {
+                System.out.println("");
                 System.out.println("Formato inválido. Por favor, digite novamente no formato dd/MM/yyyy HH:mm.");
             }
         }
@@ -80,6 +88,7 @@ public class Consulta {
     }
 
     public void marcarConsulta(String usuario) {
+        LimparConsole.clearConsole();
         pessoa.setUsuario(usuario);
         var especialidade = menuEspecialidades();
         var dataHora = menuDataHora();
@@ -92,6 +101,8 @@ public class Consulta {
         LocalTime localTime = LocalTime.now();
         int finalprot = localTime.getMinute() + localTime.getSecond();
         String auxProtocolo = dataHora.toLocalDate().format(outputFormatter) + String.valueOf(finalprot); 
+        LimparConsole.clearConsole();
+        System.out.println("");
         System.out.println("O n° do protocolo da consulta é: " + auxProtocolo);
         pessoa.setProtocolo(auxProtocolo);
 
@@ -121,7 +132,11 @@ public class Consulta {
     }
 
     public void reagendarConsulta() {
-        System.out.println("Remarcar consulta");
+        System.out.println("");
+        System.out.println("------------------------------------");
+        System.out.println("Reagendamento de consulta");
+        System.out.println("------------------------------------");
+        System.out.println("");
         var protocolo = menuProtocolo();
         var dataHora = menuDataHora();
 
@@ -134,6 +149,10 @@ public class Consulta {
     }
 
     private void auxCancelarConsulta() {
+        System.out.println("");
+        System.out.println("------------------------------------");
+        System.out.println("Cancelamento de consulta");
+        System.out.println("------------------------------------");
         System.out.println("Digite o protocolo da consulta que deseja cancelar:");
         cancelar = scanner.nextLine();
         pessoa.setProtocolo(cancelar);

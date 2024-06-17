@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import java.sql.Timestamp;
 
 import clinicamedica.*;
+import clinicamedica.organizacao.LimparConsole;
 
 public class Register {
     Pessoa pessoa = new Pessoa();
@@ -33,15 +34,18 @@ public class Register {
             stmt.setString(2, p.getSenha());
             
             stmt.executeUpdate();
-            System.out.println("inserindo registro");
+            System.out.println("Usuário criado!");
         } catch (SQLException ex) {
-            System.out.println("Usuario ja cadastrado");
+            System.out.println("Usuario ja cadastrado!");
         } finally {
             //con.close();
         }
     }  
 
     public void listar(Pessoa pessoa) {
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("CONSULTAS AGENDADAS");
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -74,7 +78,7 @@ public class Register {
             Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
         }
-
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------");
     }  
     
 
@@ -94,9 +98,11 @@ public class Register {
                 stmt = con.prepareStatement("DELETE FROM agendamento_consultas WHERE protocolo = ?");
                 stmt.setString(1, p.getProtocolo());
                 stmt.executeUpdate();
+                LimparConsole.clearConsole();
                 System.out.println("Consulta cancelada");
             } else {
                 // Protocolo não existe
+                LimparConsole.clearConsole();
                 System.out.println("Protocolo não existe, por favor tente novamente.");
             }
     
@@ -159,9 +165,11 @@ public class Register {
                 stmt.setTimestamp(1, timestamp); 
                 stmt.setString(2, p.getProtocolo());
                 stmt.executeUpdate();
+                LimparConsole.clearConsole();
                 System.out.println("Consulta reagendada!");
             } else {
                 // Protocolo não existe
+                LimparConsole.clearConsole();
                 System.out.println("Protocolo não existe, por favor tente novamente.");
             }
     
