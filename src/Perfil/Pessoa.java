@@ -3,7 +3,7 @@ package perfil;
 import java.time.LocalDateTime;
 
 public class Pessoa {
-    String usuario, senha, especialidade,clienteAux;
+    String usuario, senha, especialidade, clienteAux;
     String protocolo;
     LocalDateTime dataHora;
 

@@ -1,10 +1,12 @@
 package clinicamedica.organizacao;
-
 import java.util.Scanner;
 
 public class Menus {
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Este método exibe o menu de cadastro e verificação do usuário no sistema 
+     */
     public void menuEntrar(){
 
         System.out.println("------------------------------------");
@@ -16,6 +18,9 @@ public class Menus {
 
     }
 
+    /**
+     * Este método exibe o menu principal do sistema 
+     */
     public void menuPrincipal(){
         
         System.out.println("------------------------------------");
@@ -27,6 +32,9 @@ public class Menus {
 
     }
 
+    /**
+     * Este método exibe o menu de opções referente as consultas já agendadas
+     */
     public void menuConsultasAgendadas(){
         
         System.out.println("");

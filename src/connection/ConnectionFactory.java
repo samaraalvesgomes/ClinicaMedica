@@ -3,6 +3,10 @@ package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+/**
+ * Esta classe é responsável pela integração do banco de dados MySQL à aplicação 
+ */
     public class ConnectionFactory {
 
         private static final String DRIVER = "com.mysql.jdbc.Driver";

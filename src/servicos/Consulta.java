@@ -25,10 +25,15 @@ public class Consulta {
     Pessoa pessoa = new Pessoa();
     Cliente cliente = new Cliente();
     Register register = new Register();
+
     int especialidade;
     String cancelar;
     String confirm;
 
+    /**
+     *  Este método é responsável por exibir as opções das especialidades para que possa escolher em qual deseja marcar a consulta, retornando a especialidade desejada
+     * @return Retorna o valor da variável "opcao" que corresponde a especialidade escolhida, caso seja um valor inválido, ele chama o próprio método para execução novamente
+     */
     public int menuEspecialidades() {
         System.out.println("");
         System.out.println("------------------------------------");
@@ -45,7 +50,7 @@ public class Consulta {
 
         System.out.print("Escolha uma especialidade: ");
         int especialidade = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha pendente
+        scanner.nextLine();
 
         if (especialidade >= 1 && especialidade <= 6) {
             return especialidade;
@@ -59,6 +64,10 @@ public class Consulta {
 
     }
 
+    /**
+     * Este método é responsável por coletar o protocolo que o usuario deseja escolher 
+     * @return retorna o protocolo da consulta escolhida para fazer reagendamento ou cancelamento da consulta
+     */
     public String menuProtocolo() {
         String auxProtocolo;
         System.out.println("Digite o protocolo da consulta que deseja remarcar: ");
@@ -66,6 +75,10 @@ public class Consulta {
         return auxProtocolo;
     }
 
+    /**
+     * Este método coleta e retorna a data e hora que o usuário deseja passar, seja para marcar uma consulta ou reagendar
+     * @return o valor da variável dateTime, que seria a data inserida pelo usuário formatada
+     */
     public LocalDateTime menuDataHora() {
 
         String auxDataHora;
@@ -83,10 +96,13 @@ public class Consulta {
                 System.out.println("Formato inválido. Por favor, digite novamente no formato dd/MM/yyyy HH:mm.");
             }
         }
-
         return dateTime;
     }
 
+    /**
+     * Este método é responsável por recuperar e coletar os dados necessários para marcar uma consulta e chamar o método register.criarConsulta(pessoa);
+     * @param usuario retorna o nome do usuário contido na variável "usuario"
+     */
     public void marcarConsulta(String usuario) {
         LimparConsole.clearConsole();
         pessoa.setUsuario(usuario);
@@ -108,8 +124,7 @@ public class Consulta {
 
         register.criarConsulta(pessoa);
     }
-
-        private LocalDateTime parseDateTime(String dateTimeString, DateTimeFormatter formatter) {
+    private LocalDateTime parseDateTime(String dateTimeString, DateTimeFormatter formatter) {
         try {
             return LocalDateTime.parse(dateTimeString, formatter);
         } catch (DateTimeParseException e) {
@@ -117,12 +132,9 @@ public class Consulta {
         }
     }
 
-    public void menuPosMarcarConsulta() {
-        System.out.println("1 - Marcar outra consulta");
-        System.out.println("2 - Voltar ao menu principal");
-        System.out.println("3 - Sair");
-    }
-
+    /**
+     * Este método aciona o auxCancelarConsulta(); 
+     */
     public void cancelarConsulta() {
         auxCancelarConsulta();
 
@@ -131,6 +143,9 @@ public class Consulta {
         }
     }
 
+    /**
+     * Este método é responsável por coletar o protocolo, a data e horário (acionando outros métodos) e setar estes valores para acionar o método register.reagendarConsulta(pessoa); (faz a alteração no banco)
+     */
     public void reagendarConsulta() {
         System.out.println("");
         System.out.println("------------------------------------");
@@ -143,11 +158,13 @@ public class Consulta {
         pessoa.setProtocolo(protocolo);
         pessoa.setDataHora(dataHora);
 
-            
         register.reagendarConsulta(pessoa);
 
     }
 
+    /**
+     * Este método identifica a consulta que o usuário deseja cancelar chamando o método register.deletar(pessoa); para fazer o delete no banco
+     */
     private void auxCancelarConsulta() {
         System.out.println("");
         System.out.println("------------------------------------");

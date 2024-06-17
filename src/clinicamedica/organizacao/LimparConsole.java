@@ -1,10 +1,11 @@
 package clinicamedica.organizacao;
-
 import java.io.IOException;
 
 public class LimparConsole {
     
-    // Método para limpar o console no Windows
+    /**
+     * Este método faz a limpeza do terminal quando executado
+     */
     public static void clearConsole() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {

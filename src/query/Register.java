@@ -1,9 +1,7 @@
 package query;
 
-//import java.sql.ResultSet;
 import connection.ConnectionFactory;
 import perfil.Pessoa;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,24 +9,23 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import java.sql.Timestamp;
-
 import clinicamedica.*;
 import clinicamedica.organizacao.LimparConsole;
 
 public class Register {
     Pessoa pessoa = new Pessoa();
 
-    //Cliente cliente = new Cliente();
-
+    /**
+     * Este método é responsável por fazer a inserção dos dados coletados no médodo cliente.loginUsuario(); e inserir na tabela cadastro_usuario do banco de dados
+     * @param p retorna os valores contidos nos métodos get e set da classe Pessoa.java
+     */
     public void create(Pessoa p) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-
             stmt = con.prepareStatement("INSERT INTO cadastro_usuario (usuario,senha) VALUES (?,?)");
             stmt.setString(1, p.getUsuario());
             stmt.setString(2, p.getSenha());
@@ -42,6 +39,10 @@ public class Register {
         }
     }  
 
+    /**
+     * Este método é responsável por fazer a busca na tabela agendamento_consultas do banco de dados e retornar as linhas correspondentes ao usuario logado, exibindo o retorno do metodo pessoa.toString()
+     * @param pessoa retorna os valores contidos nos métodos get e set da classe Pessoa.java
+     */
     public void listar(Pessoa pessoa) {
         System.out.println("");
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
@@ -81,7 +82,10 @@ public class Register {
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
     }  
     
-
+    /**
+     * Este método é responsável por excluir a linha da tabela agendamento_consultas do banco de dados que corresponde ao protocolo coletado no método consulta.auxCancelarConsulta();
+     * @param p retorna os valores contidos nos métodos get e set da classe Pessoa.java
+     */
     public void deletar(Pessoa p) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -121,11 +125,14 @@ public class Register {
         }
     }
 
+    /**
+     * Este método é responsável por fazer a inserção dos dados coletados no médodo consulta.marcarConsulta(); e inserir na tabela agendamento_consultas do banco de dados
+     * @param consulta retorna os valores contidos nos métodos get e set da classe Pessoa.java
+     */
     public void criarConsulta(Pessoa consulta){
+
         Connection con = ConnectionFactory.getConnection();
-
         PreparedStatement stmt = null;
-
         try {
 
             stmt = con.prepareStatement("INSERT INTO agendamento_consultas (protocolo, usuario, especialidade, data_agendada) VALUES (?,?,?,?)");
@@ -147,6 +154,11 @@ public class Register {
             //con.close();
         }
     }
+
+    /**
+     * Este método faz a alteração dos valores atuais do banco na tabela agendamento_consultas, colocando os novos valores coletados no método consulta.reagendarConsulta();
+     * @param p retorna os valores contidos nos métodos get e set da classe Pessoa.java
+     */
     public void reagendarConsulta(Pessoa p) {
 
         Connection con = ConnectionFactory.getConnection();

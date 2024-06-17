@@ -14,43 +14,40 @@ public class ClinicaMedica {
         Register register = new Register();
         Consulta consulta=new Consulta();
 
-        //Pessoa pessoa = new Pessoa();
-        //Agenda agenda=new Agenda();
-
         String logado = null;
         int opcao;
 
-        
-
         System.out.println("Bem-vindo(a) a Mais Saúde!!!");
-        /**
-         * 
-         */
+        
         while (true) {
+            /**
+             * Esta estrutura é responsável por fazer a autenticação do usuário, se a verificação for aprovada, será liberado o sistema para utilização (else) 
+             */
             if (logado == null) {
-                menus.menuEntrar(); // Exibir menu de login
+                menus.menuEntrar(); 
                 System.out.print("Escolha uma opção: ");
-                opcao = scanner.nextInt(); // Escolher opção do menu
+                opcao = scanner.nextInt();
+
                 /**
-                 * 
+                 * Este switch é responsável por executar as funcionalidades correspondentes a opção escolhida no menu de entrada
                  */
                 switch (opcao) {
                     case 1: // cadastrar usuário
 
                         cliente.cadastroUsuario();
-                        break; // Voltar para o menu de login após criar usuário
+                        break; 
 
                     case 2: // Fazer login
 
                         logado = cliente.loginUsuario();
 
-                        while ("erro".equals(logado)) { //Login recusado
+                        while ("erro".equals(logado)) { 
                             System.out.println("Usuario invalido. Tente novamente.");
                             logado = cliente.loginUsuario();
                         }  
                         LimparConsole.clearConsole();
-                        System.out.println("Bem-vindo(a): " + cliente.getUsuario().toUpperCase()); //Login aceito 
-                        break; // Pula para linha 64
+                        System.out.println("Bem-vindo(a): " + cliente.getUsuario().toUpperCase()); 
+                        break; 
 
                     case 3: // Finalizar programa
 
@@ -66,12 +63,16 @@ public class ClinicaMedica {
 
                         System.out.println("Opção inválida. Tente novamente.");
                 }
-            } else { 
+            }else { 
+
                 // Login feito, entrada para gerenciamento do cliente              
-                menus.menuPrincipal(); // Menu pós login
+                menus.menuPrincipal(); 
                 System.out.print("Escolha uma opção: ");
-                opcao = scanner.nextInt(); // Escolha da opçao do menu
+                opcao = scanner.nextInt(); 
                 
+                /**
+                 * Este switch é responsável por executar as funcionalidades correspondentes a opção escolhida no menu principal do sistema
+                 */
                 switch (opcao) {
                     case 1:// Agendar consulta
                         consulta.marcarConsulta(cliente.getUsuario()); 
@@ -79,10 +80,10 @@ public class ClinicaMedica {
 
                     case 2: //Listar consultas agendadas
 
-                        register.listar(cliente); // Chamar uma lista de todas as consultas marcadas deste paciente
-                        menus.menuConsultasAgendadas(); //Reagendar ou Cancelar?
+                        register.listar(cliente); 
+                        menus.menuConsultasAgendadas(); 
                         System.out.print("Escolha uma opção: ");
-                        opcao = scanner.nextInt(); // Escolha da opçao do menu
+                        opcao = scanner.nextInt(); 
                          
                         switch (opcao) {
                             case 1: //Reagendar

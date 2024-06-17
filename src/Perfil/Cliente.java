@@ -12,16 +12,18 @@ import clinicamedica.ClinicaMedica;
 import clinicamedica.organizacao.LimparConsole;
 import query.Register;
 
-public class Cliente extends Pessoa { // Tentativa de criar uma herança 
+public class Cliente extends Pessoa {  
     Scanner scanner = new Scanner(System.in);
-    Register cadastro = new Register(); 
+    Register register = new Register(); 
     Pessoa pessoa = new Pessoa();
 
-
+    /**
+     *  Este método coleta as informações de um usuário não cadastrado no sistema e aciona o método register.create(pessoa);
+     */
     public void cadastroUsuario(){
         LimparConsole.clearConsole();
         System.out.println("------------------------------------");
-        System.out.println("Sign up"); // Coletar as informações de um usuário cadastrado
+        System.out.println("Sign up"); 
         System.out.println("------------------------------------");
     
         System.out.println("Informe seu usuário:");
@@ -30,26 +32,29 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
         pessoa.senha = scanner.nextLine();
         
         LimparConsole.clearConsole(); 
-        cadastro.create(pessoa);
+        register.create(pessoa);
         
     }
 
-
+    /**
+     * Este método coleta as informações de um usuário cadastrado no sistema e faz a verificação das credenciais inseridas
+     * @return Retorna o "verdadeiro" em caso de sucesso no login ou "erro" em caso de falha no login
+     */
     public String loginUsuario(){
         //Register register = new Register(); 
         Pessoa pessoa = new Pessoa();
         LimparConsole.clearConsole();
         System.out.println("------------------------------------");
-        System.out.println("Sign up"); // lógica de autenticação do usuário
+        System.out.println("Sign in"); 
         System.out.println("------------------------------------");
         System.out.println("Digite seu nome de usuário: ");
         usuario = scanner.nextLine(); 
         pessoa.setClienteAux(usuario);   
         System.out.println("Digite sua senha: ");
         senha = scanner.nextLine();
+
         // Verificação de credenciais 
         Connection con = ConnectionFactory.getConnection();
-
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -72,10 +77,10 @@ public class Cliente extends Pessoa { // Tentativa de criar uma herança
         } finally {
         }
 
-        if (usuario.equals(pessoa.getUsuario()) && senha.equals(pessoa.getSenha())) {                     ///<--
-            return "verdadeiro"; // Retorna o nome do usuário em caso de sucesso
+        if (usuario.equals(pessoa.getUsuario()) && senha.equals(pessoa.getSenha())) {                   
+            return "verdadeiro"; 
         } else {
-            return "erro"; // Retorna null em caso de falha no login
+            return "erro"; 
         }
     }
     
