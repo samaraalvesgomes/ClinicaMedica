@@ -59,6 +59,9 @@ public class Pessoa {
         this.clienteAux = clienteAux;
     }
 
+    /**
+     * Este método faz o retorno de String das consultas agendadas
+     */
     @Override
     public String toString() {
         return "Resultado da Agenda [Protocolo=" + protocolo + ", Usuario: " + usuario +", Especialidade: " + especialidade + ", data Agendada: " + dataHora +"]";

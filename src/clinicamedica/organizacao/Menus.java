@@ -33,7 +33,8 @@ public class Menus {
         System.out.println("Você quer:");
         System.out.println("1 - Reagendar consulta");
         System.out.println("2 - Cancelar consulta");
-        System.out.println("3 - Sair");
+        System.out.println("3 - agendar consulta");
+        System.out.println("4 - Sair");
         
     }
     

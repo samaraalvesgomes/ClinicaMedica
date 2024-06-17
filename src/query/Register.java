@@ -1,7 +1,9 @@
 package query;
 
+//import java.sql.ResultSet;
 import connection.ConnectionFactory;
 import perfil.Pessoa;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +11,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import java.sql.Timestamp;
+
 import clinicamedica.*;
-import clinicamedica.organizacao.LimparConsole;
 
 public class Register {
     Pessoa pessoa = new Pessoa();
@@ -21,7 +24,6 @@ public class Register {
     public void create(Pessoa p) {
 
         Connection con = ConnectionFactory.getConnection();
-
         PreparedStatement stmt = null;
 
         try {
@@ -30,22 +32,16 @@ public class Register {
             stmt.setString(1, p.getUsuario());
             stmt.setString(2, p.getSenha());
             
-
             stmt.executeUpdate();
-            System.out.println("Registro criado!");
+            System.out.println("inserindo registro");
         } catch (SQLException ex) {
-            System.out.println("Usuario ja cadastrado!");
+            System.out.println("Usuario ja cadastrado");
         } finally {
             //con.close();
         }
     }  
 
     public void listar(Pessoa pessoa) {
-        LimparConsole.clearConsole();
-        System.out.println("");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("CONSULTAS AGENDADAS");
-        System.out.println("");
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -56,7 +52,7 @@ public class Register {
                                 "especialidades.id_especialidade = agendamento_consultas.especialidade \r\n" + //
                                 "where usuario = ?\r\n" + //
                                 "");
-            stmt.setString(1, pessoa.getClienteAux());                                     
+            stmt.setString(1, pessoa.getClienteAux());                                      
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -73,37 +69,54 @@ public class Register {
             }
             if (pessoa.getEspecialidade() == null){
                 System.out.println("Você não possui nenhuma consulta agendada.");
-            }   
-            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
             }
-
-    }  
-
-    public void deletar(Pessoa protocolo){
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
-
-        try {
-            stmt = con.prepareStatement("DELETE FROM agendamento_consultas WHERE protocolo= ?");
-            stmt.setString(1, protocolo.getProtocolo());
-            stmt.executeUpdate();
-            LimparConsole.clearConsole();
-            System.out.println("Consulta cancelada");
-
         } catch (SQLException ex) {
             Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
         }
+
+    }  
+    
+
+    public void deletar(Pessoa p) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+    
+        try {
+            // Verifica se o protocolo existe
+            stmt = con.prepareStatement("SELECT protocolo FROM agendamento_consultas WHERE protocolo = ?");
+            stmt.setString(1, p.getProtocolo());
+            rs = stmt.executeQuery();
+    
+            if (rs.next()) {
+                // Protocolo existe, proceder com a deleção
+                stmt = con.prepareStatement("DELETE FROM agendamento_consultas WHERE protocolo = ?");
+                stmt.setString(1, p.getProtocolo());
+                stmt.executeUpdate();
+                System.out.println("Consulta cancelada");
+            } else {
+                // Protocolo não existe
+                System.out.println("Protocolo não existe, por favor tente novamente.");
+            }
+    
+        } catch (SQLException ex) {
+            System.out.println("Falha ao cancelar consulta, tente novamente");
+            Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Fecha os recursos no bloco finally
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void criarConsulta(Pessoa consulta){
-        System.out.println(consulta.getClienteAux() + consulta.getUsuario());
         Connection con = ConnectionFactory.getConnection();
-        System.out.println("conexão criada com sucesso");
 
         PreparedStatement stmt = null;
 
@@ -115,7 +128,6 @@ public class Register {
             stmt.setString(3, consulta.getEspecialidade());
             Timestamp timestamp = Timestamp.valueOf(consulta.getDataHora());
             stmt.setTimestamp(4, timestamp);
-            LimparConsole.clearConsole();
             System.out.println("consulta agendada!");
 
             stmt.executeUpdate();
@@ -129,4 +141,42 @@ public class Register {
             //con.close();
         }
     }
+    public void reagendarConsulta(Pessoa p) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+    
+            stmt = con.prepareStatement("SELECT protocolo FROM agendamento_consultas WHERE protocolo = ?");
+            stmt.setString(1, p.getProtocolo());
+            rs = stmt.executeQuery();
+    
+            if (rs.next()) {
+                // Protocolo existe, proceder com o update
+                stmt = con.prepareStatement("UPDATE agendamento_consultas SET data_agendada = ? WHERE protocolo = ?");
+                Timestamp timestamp = Timestamp.valueOf(p.getDataHora());
+                stmt.setTimestamp(1, timestamp); 
+                stmt.setString(2, p.getProtocolo());
+                stmt.executeUpdate();
+                System.out.println("Consulta reagendada!");
+            } else {
+                // Protocolo não existe
+                System.out.println("Protocolo não existe, por favor tente novamente.");
+            }
+    
+        } catch (SQLException ex) {
+            Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Close the resources in finally block to ensure they are closed even if an exception is thrown
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

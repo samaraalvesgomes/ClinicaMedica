@@ -94,8 +94,12 @@ public class ClinicaMedica {
 
                                 consulta.cancelarConsulta();
                                 break;
+                            case 3:// agendar consulta
+                            
+                                consulta.marcarConsulta(cliente.getUsuario()); 
+                                break;
 
-                            case 3://sair
+                            case 4://sair
                                 System.out.println("");
                                 System.out.println("--------------------------------------");
                                 System.out.println("Obrigada por escolher a Mais Saúde! ");

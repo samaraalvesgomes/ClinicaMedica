@@ -1,7 +1,6 @@
 package servicos;
 
 import clinicamedica.ClinicaMedica;
-import clinicamedica.organizacao.LimparConsole;
 import connection.ConnectionFactory;
 import perfil.Cliente;
 import perfil.Pessoa;
@@ -15,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,12 +29,7 @@ public class Consulta {
     String confirm;
 
     public int menuEspecialidades() {
-
-        LimparConsole.clearConsole();
-        System.out.println("------------------------------------");
         System.out.println("Marcar consulta");
-        System.out.println("------------------------------------");
-        System.out.println("Escolha a especialidade que deseja:");
         System.out.println("1 - Clínica médica");
         System.out.println("2 - Cardiologia");
         System.out.println("3 - Ginecologia");
@@ -59,48 +54,83 @@ public class Consulta {
 
     }
 
+    public String menuProtocolo() {
+        String auxProtocolo;
+        System.out.println("Digite o protocolo da consulta que deseja remarcar: ");
+        auxProtocolo = scanner.nextLine();
+        return auxProtocolo;
+    }
+
     public LocalDateTime menuDataHora() {
         String auxDataHora;
-        System.out.println("Digite a data e hora que deseja marcar a consulta: dd/MM/yyyy HH:mm");
-        auxDataHora = scanner.nextLine();
-        System.out.println(auxDataHora);
-        return parseDateTime(auxDataHora);
+        LocalDateTime dateTime = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        while (dateTime == null) {
+            System.out.println("Digite a data e hora que deseja marcar a consulta: dd/MM/yyyy HH:mm");
+            auxDataHora = scanner.nextLine();
+
+            dateTime = parseDateTime(auxDataHora, formatter);
+            if (dateTime == null) {
+                System.out.println("Formato inválido. Por favor, digite novamente no formato dd/MM/yyyy HH:mm.");
+            }
+        }
+
+        return dateTime;
     }
 
     public void marcarConsulta(String usuario) {
-
         pessoa.setUsuario(usuario);
         var especialidade = menuEspecialidades();
-        System.out.println("");  
         var dataHora = menuDataHora();
 
         pessoa.setEspecialidade(String.valueOf(especialidade));
         pessoa.setDataHora(dataHora);
 
+            
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalTime localTime = LocalTime.now();
         int finalprot = localTime.getMinute() + localTime.getSecond();
-        String auxProtocolo = dataHora.toLocalDate().format(outputFormatter) + String.valueOf(finalprot) ; 
+        String auxProtocolo = dataHora.toLocalDate().format(outputFormatter) + String.valueOf(finalprot); 
         System.out.println("O n° do protocolo da consulta é: " + auxProtocolo);
         pessoa.setProtocolo(auxProtocolo);
 
         register.criarConsulta(pessoa);
     }
 
-    public static LocalDateTime parseDateTime(String dateTime) {
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return LocalDateTime.parse(dateTime, inputFormatter);
+        private LocalDateTime parseDateTime(String dateTimeString, DateTimeFormatter formatter) {
+        try {
+            return LocalDateTime.parse(dateTimeString, formatter);
+        } catch (DateTimeParseException e) {
+            return null;
+        }
     }
 
+    public void menuPosMarcarConsulta() {
+        System.out.println("1 - Marcar outra consulta");
+        System.out.println("2 - Voltar ao menu principal");
+        System.out.println("3 - Sair");
+    }
 
     public void cancelarConsulta() {
-        System.out.println("");
         auxCancelarConsulta();
 
         while (!cancelar.equals(pessoa.getProtocolo())) {
-            System.out.println("");
             auxCancelarConsulta();
         }
+    }
+
+    public void reagendarConsulta() {
+        System.out.println("Remarcar consulta");
+        var protocolo = menuProtocolo();
+        var dataHora = menuDataHora();
+
+        pessoa.setProtocolo(protocolo);
+        pessoa.setDataHora(dataHora);
+
+            
+        register.reagendarConsulta(pessoa);
+
     }
 
     private void auxCancelarConsulta() {
@@ -133,9 +163,5 @@ public class Consulta {
                 Logger.getLogger(ClinicaMedica.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    public void reagendarConsulta() {
-        // Método reservado para implementação futura
     }
 }
