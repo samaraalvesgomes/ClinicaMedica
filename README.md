@@ -4,7 +4,7 @@
 Projeto acadêmico desenvolvido no curso de Ciência da Computação, com foco em construir um sistema para uma clínica médica. Utiliza **Java** como tecnologia principal, explorando conceitos fundamentais de programação orientada a objetos (POO).
 
 ## 🤝Colaboradores
-- [Milena Mafra](https://github.com/alineraldi)
+- [Milena Mafra](https://github.com/milenamafra96)
 - [Samara Alves](https://github.com/samaraalvesgomes)
 
 🎯 **Objetivos**  
